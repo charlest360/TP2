@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      <img src="@/assets/logo.png" alt="logo de OMDb" height="40px" width="80px" >
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
@@ -19,14 +20,17 @@
 
 #nav {
   padding: 30px;
+  background-color: black;
+  text-align: left;
 }
 
 #nav a {
+  vertical-align: super;
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #E6B91E;
 }
 </style>
