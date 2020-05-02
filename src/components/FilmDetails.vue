@@ -1,16 +1,16 @@
 <template>
     <div class="filmDetails">
-        <div v-if="loading">
+        <section v-if="loading">
             <h2>Chargement des films...</h2>
-        </div>
-        <div v-else>
+        </section>
+        <section v-else>
             <span class="error in filmDetails.vue :">{{error}}</span>
             <span class="title"> {{this.filmInfos.title}} </span>
             <span class=""></span>
             <span class=""></span>
             <span class=""></span>
             <span class=""></span>
-        </div>
+        </section>
         
     </div>
 </template>
@@ -28,10 +28,7 @@ import FilmService from '@/services/FilmService.js';
             return {
                 error : null,
                 loading : false,
-                filmData: null,
-                filmInfos: {},
-                nbOfCritics: 0,
-                criticsAverage : 0,
+                filmData: null
             }
         },
         created () {
@@ -49,7 +46,7 @@ import FilmService from '@/services/FilmService.js';
             
 
         },
-        /*computed: {
+        computed: {
             filmInfos() {
                 return this.filmData.film;
             },
@@ -66,9 +63,9 @@ import FilmService from '@/services/FilmService.js';
                 }
                 return rating;
             }
-        },*/
+        },
         
-        methods: {
+        /*methods: {
             setFilmInfos() {
                 this.filmInfos = this.filmData.film;
             },
@@ -86,7 +83,7 @@ import FilmService from '@/services/FilmService.js';
                
             }
 
-        },
+        },*/
 
     }
 </script>

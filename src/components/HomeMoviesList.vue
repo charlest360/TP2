@@ -1,6 +1,14 @@
 <template>
   <div class="HomeMovieList">
-    <Film-Details :filmId="totalOfFilms" />
+    <section v-if="loading">
+            <h2>Chargement en cours...</h2>
+    </section>
+    <section v-else>
+      <Film-Details :filmId="totalOfFilms" />
+      <Film-Details :filmId="totalOfFilms-1" />
+      <Film-Details :filmId="totalOfFilms-2" />
+    </section>
+    
     <ul class="films">
      
     </ul>
@@ -28,6 +36,14 @@ export default {
        else{
          return 0;
        }
+    },
+    loading() {
+      if(!this.totalOfFilms > 0 ) {
+        return true;
+      }
+      else {
+        return false;
+      }
     }
   },
     
