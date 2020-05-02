@@ -1,8 +1,6 @@
 <template>
   <div class="HomeMovieList">
-    <Film-Details :filmId=totalOfFilms />
-    <Film-Details :filmId=(totalOfFilms-1) />
-    <Film-Details :filmId=(totalOfFilms-2) />
+    <Film-Details :filmId="totalOfFilms" />
     <ul class="films">
      
     </ul>
@@ -19,7 +17,7 @@ export default {
   props: {
     filmsData: {
       type : Object,
-      required : true
+      default : null
     }
   },
   computed: {
