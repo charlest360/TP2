@@ -1,18 +1,18 @@
 <template>
   <div class="home">
-    <h1>home</h1>
+    <h1>Welcome to Our Movie Database!</h1>
     <span class="error in Home.vue :">{{error}}</span>
-    <hello-world :filmsData=filmsData />
+    <home-movies-list :filmsData=filmsData />
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+import HomeMoviesList from '@/components/HomeMoviesList.vue'
 import FilmService from '@/services/FilmService.js';
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    HomeMoviesList
   },
   data() {
     return {
