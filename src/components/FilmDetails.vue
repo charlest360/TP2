@@ -1,15 +1,28 @@
+
 <template>
+    
     <div class="filmDetails">
         <section v-if="loading">
             <h2>Chargement des films...</h2>
         </section>
+
         <section v-else>
-            <span class="error in filmDetails.vue :">{{error}}</span>
-            <span class="title"> {{this.filmInfos.title}} </span>
-            <span class=""></span>
-            <span class=""></span>
-            <span class=""></span>
-            <span class=""></span>
+            <ul>
+                <li><h2 class="title"> {{filmInfos.title}} </h2></li>
+                <li> 
+                     <section v-if="filmInfos.image != null  && filmInfos.image.length >0 ">
+                        <img :src="filmInfos.image" alt="une image" height="200" width="200">
+                     </section>
+            
+                    <section v-else>
+                        <img src="@/assets/noImage.png" alt="aucune image pour le film" height="200px" width="200px"> 
+                     </section>
+                </li>
+                <li>  <StarRating :nbOfRatings="nbOfCritics" :ratingAverage="criticsAverage" /> </li>
+                <li>{{summaryPreview}} </li>
+                <li>  <button>Consulter ce film </button></li>
+            </ul>
+           
         </section>
         
     </div>
@@ -17,11 +30,16 @@
 
 <script>
 import FilmService from '@/services/FilmService.js';
+import StarRating from '@/components/StarRating.vue';
     export default {
+        components: {
+            StarRating,
+        },
         props: {
             filmId: {
                 type: Number,
-                required: true
+                required: true,
+                default : null
             },
         },
         data() {
@@ -31,21 +49,7 @@ import FilmService from '@/services/FilmService.js';
                 filmData: null
             }
         },
-        created () {
-            this.loading =true;
-            FilmService.getFilmById(this.filmId)
-            .then(response => {
-            this.filmData = response.data;
-            })
-            .catch(error => {
-            this.error = error;
-            })
-            .finally(() => this.loading =false);
-            
-            
-            
-
-        },
+        
         computed: {
             filmInfos() {
                 return this.filmData.film;
@@ -62,9 +66,32 @@ import FilmService from '@/services/FilmService.js';
                     return (rating/this.nbOfCritics);
                 }
                 return rating;
+            },
+            summaryPreview() {
+                if (this.filmInfos.description.size >= 100){
+                    return (this.filmInfos.description.substring(0,100)+"...");
+                }
+                return (this.filmInfos.description+"...") ;
             }
         },
-        
+        watch: {
+            filmId : function() {
+                this.getFilmData();
+            }
+        },
+        methods: {
+            getFilmData() {
+                this.loading =true;
+                FilmService.getFilmById(this.filmId)
+                .then(response => {
+                this.filmData = response.data;
+                })
+                .catch(error => {
+                this.error = error;
+                })
+                .finally(() => this.loading =false);
+            }
+        },
         /*methods: {
             setFilmInfos() {
                 this.filmInfos = this.filmData.film;
@@ -88,6 +115,12 @@ import FilmService from '@/services/FilmService.js';
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+ul
+{
+    list-style-type:none;
+    padding:0px;
+    margin:0px;
+}
 
 </style>
