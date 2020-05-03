@@ -5,7 +5,7 @@
         <section v-if="loading">
             <h2>Chargement des films...</h2>
         </section>
-
+    
         <section v-else>
             <ul class="movieInfos">
                 <li><h2 class="title"> {{filmInfos.title}} </h2></li>
@@ -39,7 +39,7 @@ import StarRating from '@/components/StarRating.vue';
             filmId: {
                 type: Number,
                 required: true,
-                default : null
+                default : 0
             },
         },
         data() {
@@ -49,7 +49,11 @@ import StarRating from '@/components/StarRating.vue';
                 filmData: null
             }
         },
-        
+        mounted () {
+            if(this.filmId > 0) {
+                this.getFilmData();
+            }
+        },
         computed: {
             filmInfos() {
                 return this.filmData.film;
@@ -76,7 +80,10 @@ import StarRating from '@/components/StarRating.vue';
         },
         watch: {
             filmId : function() {
-                this.getFilmData();
+                if(this.filmId > 0) {
+                    this.getFilmData();
+                }
+                
             }
         },
         methods: {
@@ -96,25 +103,7 @@ import StarRating from '@/components/StarRating.vue';
             }
             
         },
-        /*methods: {
-            setFilmInfos() {
-                this.filmInfos = this.filmData.film;
-            },
-            setNbOfCritics() {
-                this.nbOfCritics = this.filmData.critic.length; 
-            },
-            setCriticAverage() {
-                let rating = 0;
-                if (this.nbOfCritics > 0) {
-                    for (let critic of this.filmData.critic)  {
-                         rating += critic.score;
-                    }
-                     this.criticsAverage =  (rating/this.nbOfCritics);
-                }
-               
-            }
-
-        },*/
+    
 
     }
 </script>

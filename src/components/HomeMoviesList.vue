@@ -2,7 +2,6 @@
   <div class="HomeMovieList">
     <section v-if="loading">
             <h2>Chargement en cours...</h2>
-            
     </section>
     <section v-else>
       <film-details :filmId=pagesData[pagesData.length-1] />
