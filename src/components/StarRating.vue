@@ -67,16 +67,7 @@ import StarRating from 'vue-star-rating';
                     return false;
                 }
             },
-             /*criticsAverage(){
-                let rating = 0;
-                if (this.nbOfRatings > 0) {
-                    for (let rating of this.ratings)  {
-                         rating += parseFloat(rating.score);
-                    }
-                    return (rating/this.nbOfRatings);
-                }
-                return rating;
-            },*/
+             
         },
         created () {
             this.calculateCriticsAverage();
@@ -88,16 +79,17 @@ import StarRating from 'vue-star-rating';
             },
             methods: {
                 calculateCriticsAverage() {
-                    if (this.ratings != null) {
+                    if (this.nbOfRatings >= 5) {
                          var i;
                         for (i = 0; i < this.nbOfRatings; i++) {
                             this.criticsAverage+= parseFloat( this.ratings[i].score);
                         }
-                        this.criticsAverage = (this.criticsAverage/this.nbOfRatings)/20; //division par 20 pour ramener sur 5
+                        this.criticsAverage = Math.round(((this.criticsAverage/this.nbOfRatings)*100)/20*1) /100; //division par 20 pour ramener sur 5
                     }
+                },
                    
-                                        }
-                                    },
+                                        
+        },
                                     
             
     }
