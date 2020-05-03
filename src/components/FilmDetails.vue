@@ -7,9 +7,9 @@
         </section>
 
         <section v-else>
-            <ul>
+            <ul class="movieInfos">
                 <li><h2 class="title"> {{filmInfos.title}} </h2></li>
-                <li> 
+                <li class="filmImage"> 
                      <section v-if="filmInfos.image != null  && filmInfos.image.length >0 ">
                         <img :src="filmInfos.image" alt="une image" height="200" width="200">
                      </section>
@@ -18,9 +18,9 @@
                         <img src="@/assets/noImage.png" alt="aucune image pour le film" height="200px" width="200px"> 
                      </section>
                 </li>
-                <li>  <StarRating :nbOfRatings="nbOfCritics" :ratingAverage="criticsAverage" /> </li>
+                <li>  <StarRating :nbOfRatings="nbOfCritics" :ratings="filmData.critic"  /> </li>
                 <li>{{summaryPreview}} </li>
-                <li>  <button>Consulter ce film </button></li>
+                <li>  <button class="filmPageButton" @click="showFilmPage">Consulter ce film </button></li>
             </ul>
            
         </section>
@@ -90,7 +90,11 @@ import StarRating from '@/components/StarRating.vue';
                 this.error = error;
                 })
                 .finally(() => this.loading =false);
+            },
+            showFilmPage() {
+                this.$router.push('/films/'+this.filmId);
             }
+            
         },
         /*methods: {
             setFilmInfos() {
@@ -121,6 +125,17 @@ ul
     list-style-type:none;
     padding:0px;
     margin:0px;
+}
+.filmImage {
+    width : 200px;
+    height : 200px;
+    background-color: lightgray;
+    margin : auto;
+}
+.movieInfos {
+    width : 50%;
+    margin: auto;
+    
 }
 
 </style>

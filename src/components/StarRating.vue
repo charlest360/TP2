@@ -5,12 +5,29 @@
                 <h2>Chargement en cours...</h2>
             </section>
             <section v-else>
-                
-                    <div v-if="nbOfRatings > 5">
-                       <span> xp Rating : {{ratingAverage}} </span> 
+                    <span></span>
+                    <div v-if="nbOfRatings >= 5">
+                       <span class="starRate">  Rating : <star-rating
+                            
+                            v-bind:increment="0.5"
+                            v-bind:max-rating="5"
+                            inactive-color="#dbdbdb"
+                            active-color="#cc1166"
+                            v-bind:star-size="40"
+                            :rating="criticsAverage" 
+                            :read-only="true"/> </span> 
                     </div>
                     <div v-else>
-                         <span>Rating : pas assez dévaluations </span> 
+                         <span class="starRate">Rating : <star-rating
+                            
+                            v-bind:increment="0.5"
+                            v-bind:max-rating="5"
+                            inactive-color="#dbdbdb"
+                            active-color="#cc1166"
+                            v-bind:star-size="40"
+                            :rating="0"
+                            :read-only="true"
+                             />  not enough reviews</span> 
                     </div>
             </section>
             
@@ -20,71 +37,74 @@
 </template>
 
 <script>
+import StarRating from 'vue-star-rating';
     export default {
+        components: {
+            StarRating,
+        },
         props: {
             nbOfRatings: {
                 type: Number,
-                required : true 
+                required : true,
+                default : null 
             },
-            ratingAverage: {
-                type : Number,
+            ratings: {
+                type : Array,
                 required : true
+            }
+        },
+        data() {
+            return {
+                criticsAverage: null
             }
         },
         computed: {
             loading() {
-                 if(this.ratingAverage == null ) {
+                 if(this.ratings == null ) {
                     return true;
                 }
                  else {
                     return false;
                 }
             },
-            /*starsRating() {
-                let stars = ['@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                
-                if (this.nbOfRatings >= 5 ) {
-                switch(true) {
-                    case this.ratingAverage >= 98:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png'];
-                        break;
-                    case this.ratingAverage >= 88:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarHalf.png'];
-                        break;
-                    case this.ratingAverage >= 78:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 68:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarHalf.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 58:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 48:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarHalf.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 38:
-                        stars = ['@/assets/StarFull.png','@/assets/StarFull.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 28:
-                        stars = ['@/assets/StarFull.png','@/assets/StarHalf.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 18:
-                        stars = ['@/assets/StarFull.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                        break;
-                    case this.ratingAverage >= 8:
-                        stars = ['@/assets/StarHalf.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png','@/assets/StarEmpty.png'];
-                        break;
-                    default:
-                    
-                    } 
+             /*criticsAverage(){
+                let rating = 0;
+                if (this.nbOfRatings > 0) {
+                    for (let rating of this.ratings)  {
+                         rating += parseFloat(rating.score);
+                    }
+                    return (rating/this.nbOfRatings);
                 }
-                 return stars;
-            }*/
+                return rating;
+            },*/
         },
+        created () {
+            this.calculateCriticsAverage();
+        },
+            watch: {
+                ratings : function() {
+                    this.calculateCriticsAverage();
+                }
+            },
+            methods: {
+                calculateCriticsAverage() {
+                    if (this.ratings != null) {
+                         var i;
+                        for (i = 0; i < this.nbOfRatings; i++) {
+                            this.criticsAverage+= parseFloat( this.ratings[i].score);
+                        }
+                        this.criticsAverage = (this.criticsAverage/this.nbOfRatings)/20; //division par 20 pour ramener sur 5
+                    }
+                   
+                                        }
+                                    },
+                                    
+            
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+    .starRate{
+        display: inline-block;
+    }
 </style>

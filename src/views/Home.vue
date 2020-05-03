@@ -1,9 +1,13 @@
 <template>
-  <div class="home">
-    <h1>Welcome to Our Movie Database!</h1>
-    <span class="error in Home.vue :">{{error}}</span>
-    <home-movies-list :filmsData=filmsData />
+  <div class="page">
+    tit
+     <div class="home">
+      <h1>Welcome to Our Movie Database!</h1>
+      <span class="error in Home.vue :">{{error}}</span>
+      <home-movies-list :filmsData=filmsData />
+    </div>
   </div>
+ 
 </template>
 
 <script>
@@ -35,3 +39,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .page {
+    width : 70%;
+    margin:  auto;
+    text-align: center;
+  
+  }
+</style>

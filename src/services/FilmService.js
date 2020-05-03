@@ -19,5 +19,8 @@ const apiFilms = axios.create({
     },
    getFilmById(id){
        return apiFilms.get('/films/'+id);
-   }
+   },
+   getFilmActors(id){
+    return apiFilms.get('/films/'+id+'/actors');
+}
   }
