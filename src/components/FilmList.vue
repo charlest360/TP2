@@ -1,20 +1,21 @@
 <template>
     <div>
         <section v-if="result.meta.total ==0">
-            <h1>No match was found for "{{keyword}}"</h1>
+            <h1>No match was found for "{{keyword}}"</h1>     
         </section>
         <section v-else>
             <h1>{{result.meta.total}} matches were found for "{{keyword}}"   </h1>
+            <button v-if="pageNumber > 1" @click="previousPageNumber" > Previous page </button>
+            <button v-if="pageNumber < nbPagesResult" @click="nextPageNumber" > Next page </button>
             <ul class="filmList" v-for="movie in sortedResults" :key="movie.id">
                 <li  class="filmTitle" > <h2> <film-title :filmInfos="movie" /></h2>  </li>
                 <li class="filmImages" > <film-image :filmInfos="movie" :width="200" :height="200" />  </li>
                 <li> (<film-year :filmInfos="movie" />) </li> 
-                <li> <film-review-display :filmInfos="movie" /> </li>
+                <li id="rating"> <film-review-display :filmInfos="movie" /> </li>
                 <li> <film-description :filmInfos="movie" :nbCharToDisplay="100" /> </li>
-                <li><button class="filmPageButton" @click="showFilmPage(movie.id)">Consulter ce film </button></li>
+                <li><button id="filmButton" class="filmPageButton" @click="showFilmPage(movie.id)">Consulter ce film </button></li>
             </ul>
-            <button v-if="pageNumber > 1" @click="previousPageNumber" > Previous </button>
-            <button v-if="pageNumber < nbPagesResult" @click="nextPageNumber" > Next </button>
+            
         </section>
         
     </div>
@@ -98,6 +99,7 @@ import FilmDescription from '@/components/FilmDescription.vue';
             },
             showFilmPage(id) {
                 this.$router.push('/films/'+id);
+                this.$router.go();
             },
             nextPageNumber(){
                 //if(this.pageNumber < nbPagesResult) {
@@ -127,5 +129,18 @@ import FilmDescription from '@/components/FilmDescription.vue';
     list-style-type:none;
     padding:0px;
     margin:0px;
+}
+#filmButton  {
+    padding: 10px 40px 10px 40px;
+    font-weight: bold;
+    color: #E6B91E;
+    background-color: black;
+  }
+#filmRating{
+    padding-top: 15px;
+}
+#rating{
+    display: inline-block;
+    margin: auto;
 }
 </style>

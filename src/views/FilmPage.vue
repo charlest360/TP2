@@ -1,49 +1,54 @@
 <template>
-    <div>
+    <div >
         <section v-if="loading ==true">
             <span>Loading</span>
         </section>
         <section v-else>
             
-            <span class="static" v-bind:class='{ hidden: isClicked}' >Search a movie by keyword: <input v-model="filterName" /></span> 
-        
-            <button  class="static" v-bind:class='{ hidden: isClicked}'  @click="setIsClicked"> Rechercher</button>
-        
-            <button  class="static" v-bind:class='{ hidden: isClicked ==false }' @click="setIsClicked"> Back</button>
-            
-            
-            
+            <div id=searchBar>
+                <span class="static" v-bind:class='{ hidden: isClicked}' >Search a movie by keyword: <input id="searchBox" v-model="filterName" /></span> 
+                <button  id="searchButton" class=" static" v-bind:class='{ hidden: isClicked}'  @click="setIsClicked"> Search</button>
+                <button  id="searchButton" class="static" v-bind:class='{ hidden: isClicked ==false }' @click="setIsClicked"> Back</button>
+            </div>
                 
-                <section class="static" v-bind:class='{ hidden: isClicked == false }' >
-                    <film-list :keyword="filterName" :clicked="isClicked" />
-                 </section>
-
+            <div id="filmPage">
                 <section class="static" v-bind:class='{ hidden: shouldClose ==true }'>
                     <film-suggestion-list :keyword="filterName" />
                 </section>
                 
+                <section class="static" v-bind:class='{ hidden: isClicked == false }' >
+                    <film-list :keyword="filterName" :clicked="isClicked" />
+                 </section>
+                
                 <section>
                     <ul class="static" v-bind:class='{ hidden: isClicked}' id="filmData">
-                        <li id="filmId"> <h1>{{filmData.film.title}}</h1> </li>
-                
+                        <li id="filmTitle"> 
+                            <h1> <film-title :filmInfos="filmData.film" /> (<film-year :filmInfos="filmData.film" />)</h1> 
+                        </li>
                         <li id="filmImage"> 
-                            <section v-if="filmData.film.image != null  && filmData.film.image.length >0 ">
-                                <img :src="filmData.film.image" alt="une image" height="400" width="400">
-                            </section>
-            
-                            <section v-else>
-                                <img src="@/assets/noImage.png" alt="aucune image pour le film" height="400" width="400"> 
-                            </section></li>
-                        <li id="filmReview"><star-rating :nbOfRatings="filmData.critic.length" :ratings="filmData.critic" /> ({{filmData.critic.length}} reviews)</li>
-               
-                        <li id="filmDescription"> Résumé : {{filmData.film.description}}</li>
-                        <li id="filmRanking"> Ranking : {{filmData.film.rating}}</li>
-                        <li id="filmLength"> Length : {{filmData.film.length}}</li>
-                        <li id="filmReleaseYear">Released in  {{filmData.film.release_year}}</li>
-                        <li> <film-actors :filmId="filmData.film.id"  /> </li>
+                            <film-image :filmInfos="filmData.film" height="400" width="400" /> 
+                        </li>
+                        <li id="rating">
+                            <film-review-display :filmInfos="filmData.film"/>
+                        </li>
+                        <li id="filmDescription"> 
+                            <film-description :filmInfos="filmData.film" /> 
+                        </li>
+                        <li id="filmRanking"> 
+                            <film-ranking :filmInfos="filmData.film"/>
+                        </li>
+                        <li id="filmLength"> 
+                            <film-length :filmInfos="filmData.film"/> minutes
+                        </li>
+                        <li id="filmReleaseYear">
+                            
+                        </li>
+                        <li> 
+                            <film-actors :filmId="filmData.film.id"  /> 
+                        </li>
                     </ul>
                 </section>
-                
+            </div>
          
         </section>
         
@@ -53,15 +58,27 @@
 <script>
 import FilmSuggestionList from '@/components/FilmSuggestionList.vue';
 import FilmList from '@/components/FilmList.vue';
-import StarRating from '@/components/StarRating.vue';
 import FilmService from '@/services/FilmService.js';
 import FilmActors from '@/components/FilmActors.vue';
+import FilmImage from '@/components/FilmImage.vue';
+import FilmTitle from '@/components/FilmTitle.vue';
+import FilmYear from '@/components/FilmYear.vue';
+import FilmReviewDisplay from '@/components/FilmReviewDisplay.vue';
+import FilmDescription from '@/components/FilmDescription.vue';
+import FilmRanking from '@/components/FilmRanking.vue';
+import FilmLength from '@/components/FilmLength.vue';
     export default {
         components: {
-            StarRating,
-            FilmActors,
             FilmSuggestionList,
-            FilmList
+            FilmList,
+            FilmActors,
+            FilmImage,
+            FilmTitle,
+            FilmYear,
+            FilmReviewDisplay,
+            FilmDescription,
+            FilmRanking,
+            FilmLength
         },
         props: {
             id: {
@@ -159,6 +176,42 @@ ul
   .movieData {
 
     background-color: LightGray;
+  }
+  #filmPage{
+      background-color: white;
+      width: 70%;
+      margin:auto;
+  }
+  #filmTitle h1 {
+      padding-top: 20px;
+  }
+  #rating{
+    display: inline-block;
+    margin: auto;
+  }
+  #searchBar{
+    vertical-align: bottom;
+  background-color: #E6B91E;
+  color: black;
+  width: 110%;
+  font-weight: bold;
+  font-size: 20px;;
+  display: inline-block;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  
+  }
+  #searchBox{
+    width: 30%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 10px 20px ;
+  }
+  #searchButton  {
+    padding: 10px 40px 10px 40px;
+    font-weight: bold;
+    color: #E6B91E;
+    background-color: black;
   }
 
 </style>
