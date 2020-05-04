@@ -213,5 +213,11 @@ ul
     color: #E6B91E;
     background-color: black;
   }
+  #filmDescription {
+      width:50%;
+      margin: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
 
 </style>

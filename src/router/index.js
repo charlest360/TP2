@@ -9,7 +9,10 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      title : 'Home Page - OMDb'
+    }
   },
   {
     path: '/about',
@@ -23,7 +26,10 @@ Vue.use(VueRouter)
     path: '/films/:id',
     name: 'FilmPage',
     component: FilmPage,
-    props: true
+    props: true,
+    meta: {
+      title : 'Show movie page - OMDb '
+    }
     },
 ]
 
