@@ -17,11 +17,11 @@
                 required : true
             },
             height : {
-                type: Number,
+                type: undefined ,
                 required : true
             },
             width : {
-                type: Number,
+                type: undefined ,
                 required : true
             }
         },

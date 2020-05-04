@@ -1,31 +1,36 @@
 <template>
   <div class="page">
-  
-     <div class="home">
-        <h1 v-bind:class='{ hidden: isClicked}'>Welcome to Our Movie Database!</h1>
-        <span class="error in Home.vue :">{{error}}</span>
+    
+     
+        <div id=searchBar>
+          <span class="static" v-bind:class='{ hidden: isClicked}' >Search a movie by keyword: <input id="searchBox" v-model="filterName" /></span> 
+          <button  id="searchButton" class=" static" v-bind:class='{ hidden: isClicked}'  @click="setIsClicked"> Search</button>
+          <button  id="searchButton" class="static" v-bind:class='{ hidden: isClicked ==false }' @click="setIsClicked"> Back</button>
+        </div>
         
-        <span class="static" v-bind:class='{ hidden: isClicked}' >Search a movie by keyword: <input v-model="filterName" /></span> 
-        
-        <button  class="static" v-bind:class='{ hidden: isClicked}'  @click="setIsClicked"> Rechercher</button>
-        
-        <button  class="static" v-bind:class='{ hidden: isClicked ==false }' @click="setIsClicked"> Back</button>
+        <div class="actualPage">
+          <span class="error in Home.vue :">{{error}}</span>
       
-        <div class="movieData">
-          <section class="static" v-bind:class='{ hidden: isClicked == false }' >
-            <film-list :keyword="filterName" :clicked="isClicked" />
-          </section>
-
         <section class="static" v-bind:class='{ hidden: shouldClose ==true }'>
           <film-suggestion-list :keyword="filterName" />
         </section>
+
+         <h1 id="welcome" v-bind:class='{ hidden: isClicked}'>Welcome to Our Movie Database!</h1>
+
+        
+         <div class="movieData">
+          <section class="static" v-bind:class='{ hidden: isClicked == false }' >
+            <film-list :keyword="filterName" :clicked="isClicked" />
+          </section>
       
         <section class="static" v-bind:class='{ hidden: isClicked}' >
           <home-movies-list :filmsData=filmsData />
         </section>
       </div>
+      </div> 
+        <span class="error in Home.vue :">{{error}}</span>
       
-    </div>
+    
   </div>
  
 </template>
@@ -88,17 +93,44 @@ export default {
 </script>
 
 <style scoped>
-  .page {
+  #searchBar{
+    vertical-align: bottom;
+  background-color: #E6B91E;
+  color: black;
+  width: 110%;
+  font-weight: bold;
+  font-size: 20px;;
+  display: inline-block;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  
+  }
+  #searchBox{
+    width: 30%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 10px 20px ;
+  }
+  #searchButton  {
+    padding: 10px 40px 10px 40px;
+    font-weight: bold;
+    color: #E6B91E;
+    background-color: black;
+  }
+  .actualPage {
     width : 70%;
     margin:  auto;
     text-align: center;
+    background-color: white;
   
   }
   .hidden {
     display: none;
   }
-  .movieData {
 
-    background-color: LightGray;
+  
+  #welcome {
+    padding-top : 15px;
+    padding-bottom: 25px;
   }
 </style>

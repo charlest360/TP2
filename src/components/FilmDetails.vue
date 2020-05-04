@@ -8,19 +8,15 @@
     
         <section v-else>
             <ul class="movieInfos">
-                <li><h2 class="title"> {{filmInfos.title}} </h2></li>
-                <li class="filmImage"> 
-                     <section v-if="filmInfos.image != null  && filmInfos.image.length >0 ">
-                        <img :src="filmInfos.image" alt="une image" height="200" width="200">
-                     </section>
-            
-                    <section v-else>
-                        <img src="@/assets/noImage.png" alt="aucune image pour le film" height="200px" width="200px"> 
-                     </section>
+                <li>
+                    <h2> <film-title :filmInfos="filmInfos" /> </h2>
                 </li>
-                <li>  <StarRating :nbOfRatings="nbOfCritics" :ratings="filmData.critic"  /> </li>
+                <li class="filmImage"> 
+                    <film-image :filmInfos="filmInfos" :width="300" :height="300"/>
+                </li>
+                <li id="rating">  <film-review-display  :filmInfos="filmInfos"  /> </li>
                 <li>{{summaryPreview}} </li>
-                <li>  <button class="filmPageButton" @click="showFilmPage">Consulter ce film </button></li>
+                <li>  <button id="filmButton" class="filmPageButton" @click="showFilmPage">Show this movie's page</button></li>
             </ul>
            
         </section>
@@ -30,10 +26,14 @@
 
 <script>
 import FilmService from '@/services/FilmService.js';
-import StarRating from '@/components/StarRating.vue';
+import FilmReviewDisplay from '@/components/FilmReviewDisplay.vue';
+import FilmTitle from '@/components/FilmTitle.vue';
+import FilmImage from '@/components/FilmImage.vue';
     export default {
         components: {
-            StarRating,
+            FilmReviewDisplay,
+            FilmTitle,
+            FilmImage
         },
         props: {
             filmId: {
@@ -116,15 +116,28 @@ ul
     margin:0px;
 }
 .filmImage {
-    width : 200px;
-    height : 200px;
+    width : 300px;
+    height : 300px;
     background-color: lightgray;
     margin : auto;
 }
 .movieInfos {
-    width : 50%;
+    width : 40%;
     margin: auto;
     
+}
+#filmButton  {
+    padding: 10px 40px 10px 40px;
+    font-weight: bold;
+    color: #E6B91E;
+    background-color: black;
+  }
+#filmRating{
+    padding-top: 15px;
+}
+#rating{
+    display: inline-block;
+    margin: auto;
 }
 
 </style>

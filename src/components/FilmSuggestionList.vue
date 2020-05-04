@@ -76,6 +76,7 @@ import FilmImage from '@/components/FilmImage.vue';
             },
             showFilmPage(movieInfos) {
                 this.$router.push('/films/'+movieInfos.id);
+                this.$router.go();
             }
         },    
         computed: {

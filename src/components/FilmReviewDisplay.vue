@@ -3,7 +3,7 @@
 
                     <span></span>
                     <div v-if="nbOfCritics >= 5">
-                       <span class="starRate">  Rating : <star-rating
+                       <span class="starRate"><star-rating
                             
                             v-bind:increment="0.5"
                             v-bind:max-rating="5"
@@ -14,7 +14,7 @@
                             :read-only="true"/> </span> 
                     </div>
                     <div v-else>
-                         <span class="starRate">Rating : <star-rating
+                         <span class="starRate"><star-rating
                             
                             v-bind:increment="0.5"
                             v-bind:max-rating="5"
